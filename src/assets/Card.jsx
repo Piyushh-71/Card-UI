@@ -1,32 +1,26 @@
-import { Ellipsis } from "lucide-react";
-import { UserRoundMinus } from "lucide-react";
-
-import { UserRoundPlus } from "lucide-react";
-
-import { users } from "../App.jsx";
-
-const abc = () => {
-  if (users.isFollowing === "true") {
-    users.isFollowing = "false";
-  } else {
-    users.isFollowing = "true";
-  }
-};
+import { Ellipsis, UserRoundPlus, UserRoundMinus } from "lucide-react";
+import React, { useState } from "react";
 
 const card = ({ user }) => {
+  const [isFollowing, setIsFollowing] = useState(user.isFollowing);
+  const Btnclicked = () => {
+    setIsFollowing((prev) => !prev);
+  };
+
   return (
     <div className="relative h-[400px] select-none w-[300px]  flex flex-col gap-[15px] bg-white rounded-[10px]">
       <img
+        loading="lazy"
         className="object-cover h-[180px]  w-full rounded "
         src={user.coverImg}
         alt=""
       />
       <h1
-        onClick={abc}
-        className="h1 active:scale-90 transition-discrete duration-500 cursor-pointer absolute top-[5%] right-[4%] bg-gray-300 opacity-80 w-fit backdrop-blur-xl rounded-2xl p-[10px] inline-flex gap-1.5 items-center text-[10px]"
+        onClick={Btnclicked}
+        className="h1 active:scale-90 transition-all duration-500 cursor-pointer absolute top-[5%] right-[4%] bg-gray-300 opacity-80 w-fit backdrop-blur-xl rounded-2xl p-[10px] inline-flex gap-1.5 items-center text-[10px]"
       >
-        {user.isFollowing ? "Unfollow" : "Follow"}
-        {user.isFollowing ? (
+        {isFollowing ? "Unfollow" : "Follow"}
+        {isFollowing ? (
           <UserRoundMinus size={13} strokeWidth={2} />
         ) : (
           <UserRoundPlus size={13} strokeWidth={2} />
@@ -36,6 +30,7 @@ const card = ({ user }) => {
       <div className="flex gap-[5px] select-none flex-col items-center">
         <img
           className="object-cover absolute h-[70px] w-[70px] object-center top-[34%] rounded-full"
+          loading="lazy"
           src={user.profileImg}
           alt=""
         />
